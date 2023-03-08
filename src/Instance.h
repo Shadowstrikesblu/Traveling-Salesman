@@ -15,6 +15,9 @@ class Instance {
 public:
     Instance(std::string filename);
     void write_solution(std::string filename, std::vector<City> sequence, double total_distance);
+    const std::unordered_map<std::pair<int, int>, double> &getDistances() const;
+    const std::vector<City> &getCities() const;
+
 private:
     std::vector<City> cities;
     std::unordered_map<std::pair<int,int>, double> distances;

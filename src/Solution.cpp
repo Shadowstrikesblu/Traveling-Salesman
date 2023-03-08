@@ -8,14 +8,14 @@
 #include <fstream>
 #include <iostream>
 
-Solution::Solution(Instance &instance) : instance(instance), sequence(instance.get_cities()) {}
+Solution::Solution(Instance &instance) : instance(instance), sequence(instance.getCities()) {}
 
 double Solution::evaluate() {
     double distance = 0;
     int n = sequence.size();
     for (int i = 0; i < n; i++) {
         int j = (i + 1) % n;
-        distance += instance.get_distance(sequence[i], sequence[j]);
+        distance += instance.getDistances(sequence[i], sequence[j]);
     }
     total_distance = distance;
     return distance;
@@ -47,7 +47,7 @@ void Solution::read(std::string filename) {
         std::string line;
         std::vector<City> new_sequence;
         while (std::getline(file, line)) {
-            for (City city : instance.get_cities()) {
+            for (City city : instance.getCities()) {
                 if (city.name == line) {
                     new_sequence.push_back(city);
                     break;

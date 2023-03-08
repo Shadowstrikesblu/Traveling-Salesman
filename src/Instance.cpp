@@ -47,3 +47,11 @@ void Instance::write_solution(std::string filename, std::vector<City> sequence, 
         throw std::runtime_error("Cannot write to file " + filename);
     }
 }
+
+const std::vector<City> &Instance::getCities() const {
+    return cities;
+}
+
+const std::unordered_map<std::pair<int, int>, double> &Instance::getDistances() const {
+    return distances;
+}
