@@ -3,21 +3,38 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "City.h"
 
 int main() {
-// read all file, print the content of the file.txt and throw error if read not possible
+    // open file
     std::ifstream file("../file.txt");
-    double total_distance;
-    file >> total_distance;
+    // init city and line
+    std::vector<City> city;
     std::string line;
+    // read first line
+    std::getline(file, line);
+    // convert line to int
+    int size = std::stoi(line);
+    // check if file is open
     if (file.is_open()) {
-        std::vector<City> new_sequence;
-        while (std::getline(file, line)) {
-        std::cout << line << std::endl;
+        for (int i = 0; i < size; i++) {
+            //read line per line
+            std::getline(file, line);
+            // write line to console
+            std::cout << line << std::endl;
+            // split line into words
+            std::istringstream ss(line);
+            // init variables
+            double latitude, longitude;
+            std::string name;
+            // read line into variables
+            ss >> name >> latitude >> longitude;
+            // add city to vector
+            city.emplace_back(i, name, latitude, longitude);
         }
     } else {
+        // throw error if file is not open
         throw std::runtime_error("Cannot open file file.txt");
     }
 }
-

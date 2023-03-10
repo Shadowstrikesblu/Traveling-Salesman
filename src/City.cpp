@@ -5,11 +5,11 @@
 #include "City.h"
 #include <cmath>
 
-City::City(std::string name, double latitude, double longitude) :
-        name(name), latitude(latitude), longitude(longitude) {}
+City::City(int id, std::string name, double latitude, double longitude) :
+        id(id), name(name), latitude(latitude), longitude(longitude) {}
 
 double City::distance(City other_city) {
-    double earth_radius = 6371; // km
+    double earth_radius = 6378.137;
     double d_latitude = M_PI/180 * (other_city.latitude - latitude);
     double d_longitude = M_PI/180 * (other_city.longitude - longitude);
     double a = std::sin(d_latitude/2) * std::sin(d_latitude/2) +
