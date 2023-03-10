@@ -9,11 +9,15 @@
 
 class City {
 public:
-    City(std::string name, double latitude, double longitude);
+    City(int id, std::string name, double latitude, double longitude);
     double distance(City other_city);
+    int id;
     std::string name;
     double latitude;
     double longitude;
+private:
+
 };
+
 
 #endif
