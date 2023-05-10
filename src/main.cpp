@@ -22,7 +22,7 @@ int main() {
             //read line per line
             std::getline(file, line);
             // write line to console
-            std::cout << line << std::endl;
+            // std::cout << line << std::endl;
             // split line into words
             std::istringstream ss(line);
             // init variables
@@ -32,6 +32,10 @@ int main() {
             ss >> name >> latitude >> longitude;
             // add city to vector
             city.emplace_back(i, name, latitude, longitude);
+            // evaluate distance between cities and other cities and print distance to console
+            for (int j = 0; j < i; j++) {
+                std::cout << city[i].name << " " << city[j].name << " " << city[i].distance(city[j]) << std::endl;
+            }
         }
     } else {
         // throw error if file is not open
