@@ -7,9 +7,9 @@
 #include <random>
 #include <fstream>
 #include <iostream>
-#include "Instance.h"
 
-Solution::Solution(Instance &instance) : instance(instance), sequence(instance.getCities()) {}
+
+Solution::Solution(Solution &solution1) : solution(solution1), sequence(solution1.getCities()) {}
 
 double Solution::evaluate() {
     double distance = 0;
@@ -17,7 +17,7 @@ double Solution::evaluate() {
     for (int i = 0; i < n; i++) {
         int j = (i + 1) % n;
         auto city_pair = std::make_pair(sequence[i].id, sequence[j].id);
-        auto distances = instance.getDistances(city_pair);
+        auto distances = solution.getDistances(city_pair);
         for (auto& pair : distances) {
             distance += pair.second;
         }
@@ -38,4 +38,26 @@ void Solution::print() {
         std::cout << city.name << "\n";
     }
     std::cout << "Total distance: " << total_distance << "\n";
+}
+
+void Solution::compute_distances() {
+    int n = cities.size();
+    for (int i = 0; i < n; i++) {
+        for (int j = i+1; j < n; j++) {
+            City city1 = cities[i];
+            City city2 = cities[j];
+            double distance = city1.distance(city2);
+            distances.insert({{i, j}, distance});
+            distances.insert({{j, i}, distance});
+        }
+    }
+}
+
+const std::vector<City> &Solution::getCities() const {
+    return cities;
+}
+
+const std::unordered_map<std::pair<int, int>, double, Solution::pair_hash> & Solution::getDistances(
+        std::pair<int, int> pair) const {
+    return distances;
 }
