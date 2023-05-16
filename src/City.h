@@ -15,8 +15,11 @@ public:
     std::string name;
     double latitude;
     double longitude;
-private:
 
+
+    double distance(const City &other_city) const;
+
+    void readTSPFile(const std::string &filename);
 };
 
 

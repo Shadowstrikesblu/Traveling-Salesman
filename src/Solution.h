@@ -27,15 +27,19 @@ public:
     const std::unordered_map<std::pair<int, int>, double, pair_hash> &getDistances(std::pair<int, int> pair) const;
     const std::vector<City>& getCities() const;
     double evaluate();
-
     void randomize();
-
     void print();
+    void compute_distances();
+    static double convert(double);
 
 private:
     Solution &solution;
     std::vector<City> sequence;
     double total_distance;
+    std::vector<City> cities;
+    std::unordered_map<std::pair<int, int>, double, pair_hash> distances;
+
+    void convert();
 };
 
 #endif

@@ -40,17 +40,24 @@ void Solution::print() {
     std::cout << "Total distance: " << total_distance << "\n";
 }
 
-void Solution::compute_distances() {
-    int n = cities.size();
-    for (int i = 0; i < n; i++) {
-        for (int j = i+1; j < n; j++) {
-            City city1 = cities[i];
-            City city2 = cities[j];
-            double distance = city1.distance(city2);
-            distances.insert({{i, j}, distance});
-            distances.insert({{j, i}, distance});
-        }
-    }
+//void Solution::compute_distances() {
+//    int n = cities.size();
+//    for (int i = 0; i < n; i++) {
+//        for (int j = i+1; j < n; j++) {
+//            City city1 = cities[i];
+//            City city2 = cities[j];
+//            double distance = city1.distance(city2);
+//            distances.insert({{i, j}, distance});
+//            distances.insert({{j, i}, distance});
+//        }
+//    }
+//}
+
+double Solution::convert(double a){
+    double pi = 3.141592;
+    a = (pi * a / 180);
+    return a;
+
 }
 
 const std::vector<City> &Solution::getCities() const {
