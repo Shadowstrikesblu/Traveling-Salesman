@@ -4,22 +4,19 @@
 #include <sstream>
 #include "City.h"
 #include <cmath>
-#include "Solution.h"
-
-
+#include "Part1/Solution.h"
+#include "Part1/Sort.h"
+#include "Part1/Random.h"
 
 int main() {
-    // open file
     std::ifstream file("../file.txt");
-    // init city and line
     std::vector<City> cities;
     std::string line;
-    // read first line
+
     if (!std::getline(file, line)) {
         std::cerr << "Failed to read the size of the input." << std::endl;
         return 1;
     }
-    // convert line to int
     int size;
     try {
         size = std::stoi(line);
@@ -27,63 +24,59 @@ int main() {
         std::cerr << "Invalid input size: " << line << std::endl;
         return 1;
     }
+
+    // Lis les informations du fichier txt
+    for (int i = 0; i < size; i++) {
+        std::getline(file, line);
+        std::istringstream ss(line);
+        double latitude, longitude;
+        std::string name;
+        ss >> name >> latitude >> longitude;
+        if (ss.fail()) {
+            std::cerr << "Invalid input format in line " << i + 2 << std::endl;
+            return 1;
+        }
+        cities.emplace_back(i, name, latitude, longitude);
+    }
+
+    file.close();
+//    std::vector<City> cities = Readfile("../file.txt");
+    // Arrange les cités en fonction des distances entre chacunes
+    City startCity = cities[0];
+    orderCitiesByDistance(cities, startCity);
+    // Affiche le nouvel ordre des villes
+    std::cout << "Solution:" << std::endl;
+    for (const City& city : cities) {
+        std::cout << city.id  << std::endl;
+    }
+
+    // Calculate average distance
+    double totalDistance = 0.0;
+    int count = 0;
     double R = 6378.137;
 
-    // check if file is open
-    if (file.is_open()) {
-        for (int i = 0; i < size; i++) {
-            //read line per line
-            std::getline(file, line);
-            // split line into words
-            std::istringstream ss(line);
-            // init variables
-            double latitude, longitude;
-            std::string name;
-            // read line into variables
-            ss >> name >> latitude >> longitude;
-            if (ss.fail()) {
-                std::cerr << "Invalid input format in line " << i + 2 << std::endl;
-                return 1;
-            }
-            // add city to vector
-            cities.emplace_back(i, name, latitude, longitude);
-        }
-        // calculate average distance
-        double totalDistance = 0.0;
-        int count = 0;
-        double last_long = Solution::convert(cities[-1].longitude);
-        double last_lat = Solution::convert(cities[-1].latitude);
-        double first_long = Solution::convert(cities[0].longitude);
-        double first_lat = Solution::convert(cities[0].latitude);
-        for (int i = 0; i < size - 1; i++) {
-            double v_longitude = Solution::convert(cities[i].latitude);
-            double v1_longitude = Solution::convert(cities[i + 1].latitude);
-            double v_latitude = Solution::convert(cities[i].longitude);
-            double v1_latitude = Solution::convert(cities[i + 1].longitude);
-
-            double distance = R * acos(sin(v_latitude) * sin(v1_latitude) +
-                                       cos(v_latitude) * cos(v1_latitude) *
-                                       cos(v_longitude - v1_longitude));
-//            std::cout << "Distance between cities " << i << " and " << i + 1 << ": " << distance << std::endl;
-            totalDistance += distance;
-            count++;
-        }
-        double last_distance = R * acos(sin(last_lat) * sin(first_lat) +
-                            cos(last_lat) * cos(first_lat) *
-                            cos(last_long - first_long));
-        totalDistance+= last_distance;
-        count +=1;
-        double averageDistance = totalDistance / count ;
-        std::cout << "Count: " << count  << std::endl;
-        std::cout << "Average Distance: " << averageDistance << std::endl;
-        std::ofstream MyFile;
-        MyFile.open("../log.txt");
-        MyFile << averageDistance;
-        MyFile.close();
-    } else {
-        // throw error if file is not open
-        std::cerr << "Failed to open file file.txt" << std::endl;
-        return 1;
+    for (int i = 0; i < cities.size() - 1; i++) {
+        double v_longitude = Solution::convert(cities[i].latitude);
+        double v1_longitude = Solution::convert(cities[i + 1].latitude);
+        double v_latitude = Solution::convert(cities[i].longitude);
+        double v1_latitude = Solution::convert(cities[i + 1].longitude);
+        double distance = R * acos(sin(v_latitude) * sin(v1_latitude) +
+                                   cos(v_latitude) * cos(v1_latitude) *
+                                   cos(v_longitude - v1_longitude));
+        std::cout << "Distance entre les villes " << i << " et " << i + 1 << ": " << distance << std::endl;
+        totalDistance += distance;
+        count++;
     }
+
+    double averageDistance = totalDistance / count;
+    std::cout << "Distance moyenne: " << averageDistance << std::endl;
+
+    //Calcule un ordre aléatoire
+    RandomizeCityOrder(cities);
+    std::cout << "Solution Aleatoire:" << std::endl;
+    for (const City& city : cities) {
+        std::cout << city.id  << std::endl;
+    }
+
     return 0;
 }
