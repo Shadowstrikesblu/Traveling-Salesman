@@ -2,13 +2,19 @@
 // Created by hmoul on 03/06/2023.
 //
 
-#include "Meilleure_ameliorante.h"
+#include "Meilleur_amelioratiante_random.h"
 
 std::vector<int> Meilleure(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities) {
     std::vector<int> bestSolution = sequence1;
     double bestDistance = DistanceSequence(sequence1, cities);
 
-    for (const std::vector<int>& voisin : sequence2) {
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    std::vector<std::vector<int>> randomizedNeighbors = sequence2;
+    std::shuffle(randomizedNeighbors.begin(), randomizedNeighbors.end(), generator);
+
+    for (const std::vector<int>& voisin : randomizedNeighbors) {
         double neighborDistance = DistanceSequence(voisin, cities);
 
         if (neighborDistance < bestDistance) {
@@ -19,15 +25,3 @@ std::vector<int> Meilleure(const std::vector<int>& sequence1, const std::vector<
 
     return bestSolution;
 }
-
-
-double DistanceSequence(const std::vector<int>& sequence, const std::vector<City>& cities) {
-    double distance = 0.0;
-    for (size_t i = 0; i < sequence.size() - 1; i++) {
-        City cityA = cities[sequence[i]];
-        City cityB = cities[sequence[i + 1]];
-        distance += CalculateDistance(cityA, cityB); // Assuming you have a function named getDistance to calculate distance between two cities
-    }
-    return distance;
-}
-
