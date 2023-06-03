@@ -7,11 +7,8 @@
 
 
 #include <vector>
-#include "../City.h"
-#include "../Part1/Calculate.h"
 
-std::vector<int> Meilleure(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities);
-double DistanceSequence(const std::vector<int>& sequence, const std::vector<City>& cities);
+void Meilleure(std::vector<int>& sequence, int cityIndex1);
 
 
 #endif //TRAVELING_SALESMAN_MEILLEURE_AMELIORANTE_H
