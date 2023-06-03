@@ -1,44 +1,33 @@
-
-
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <sstream>
 #include "City.h"
+#include <cmath>
+#include "Part1/Solution.h"
+#include "Part1/Sort.h"
+#include "Part1/Random.h"
+#include "Part1/Calculate.h"
+#include "Part1/Print.h"
+#include "Part1/ReadFile.h"
 
 int main() {
-    // open file
-    std::ifstream file("../file.txt");
-    // init city and line
-    std::vector<City> city;
-    std::string line;
-    // read first line
-    std::getline(file, line);
-    // convert line to int
-    int size = std::stoi(line);
-    // check if file is open
-    if (file.is_open()) {
-        for (int i = 0; i < size; i++) {
-            //read line per line
-            std::getline(file, line);
-            // write line to console
-            // std::cout << line << std::endl;
-            // split line into words
-            std::istringstream ss(line);
-            // init variables
-            double latitude, longitude;
-            std::string name;
-            // read line into variables
-            ss >> name >> latitude >> longitude;
-            // add city to vector
-            city.emplace_back(i, name, latitude, longitude);
-            // evaluate distance between cities and other cities and print distance to console
-            for (int j = 0; j < i; j++) {
-                std::cout << city[i].name << " " << city[j].name << " " << city[i].distance(city[j]) << std::endl;
-            }
-        }
-    } else {
-        // throw error if file is not open
-        throw std::runtime_error("Cannot open file file.txt");
+    std::string filename = "../file.txt";
+    std::vector<City> cities = ReadFile(filename);
+    if (cities.empty()) {
+        return 1;
     }
+    // Réorganise les villes en fonction de la distance
+    City startCity = cities[0];
+    orderCitiesByDistance(cities, startCity);
+    // Affiche le nouvel ordre des villes
+    Print(cities);
+    // Calcule des distances
+    Calculate(cities);
+    // Solution Aléatoire
+    RandomizeCityOrder(cities);
+    std::cout << "Solution Aleatoire:" << std::endl;
+    Print(cities);
+
+    return 0;
 }
