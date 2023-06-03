@@ -7,6 +7,7 @@
 
 #include "../City.h"
 
-void Calculate(const std::vector<City>& cities);
+double Calculate(const std::vector<City>& cities);
+double CalculateDistance(const City& city1, const City& city2);
 
 #endif //TRAVELING_SALESMAN_CALCULATE_H
