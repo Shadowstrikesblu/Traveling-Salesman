@@ -4,11 +4,12 @@
 
 #include "Meilleure_ameliorante.h"
 #include "../Part1/Calculate.h"
+#include "../Complement/GetCityIndices.h"
 #include <vector>
 
-std::vector<int> Meilleure_Ameliorante(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities) {
-    std::vector<int> meilleure_solution = sequence1;
-    double meilleure_distance = DistanceSequence(sequence1, cities);
+std::vector<int> Meilleure_Ameliorante(const std::vector<City>& cities, const std::vector<std::vector<int>>& sequence2) {
+    std::vector<int> meilleure_solution = GetCityIndices(cities);
+    double meilleure_distance = DistanceSequence(meilleure_solution, cities);
 
     for (const std::vector<int>& solution_voisine : sequence2) {
         double distance_voisine = DistanceSequence(solution_voisine, cities);
@@ -22,13 +23,12 @@ std::vector<int> Meilleure_Ameliorante(const std::vector<int>& sequence1, const 
     return meilleure_solution;
 }
 
-double DistanceSequence(std::vector<int> sequence, const std::vector<City>& cities) {
+double DistanceSequence(const std::vector<int>& sequence, const std::vector<City>& cities) {
     double distance = 0.0;
     for (size_t i = 0; i < sequence.size() - 1; i++) {
         City cityA = cities[sequence[i]];
         City cityB = cities[sequence[i + 1]];
-        distance += CalculateDistance(cityA, cityB); // Assuming you have a function named getDistance to calculate distance between two cities
+        distance += CalculateDistance(cityA, cityB);
     }
     return distance;
 }
-

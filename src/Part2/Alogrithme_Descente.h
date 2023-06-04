@@ -10,7 +10,7 @@
 #include "../City.h"
 #include <limits>
 
-std::vector<int> Descente(const std::vector<int>& s, const std::vector<std::vector<int>>& voisinage, const std::vector<City>& cities);
+std::vector<int> Descente(const std::vector<City>& cities, const std::vector<std::vector<int>>& voisinage);
 
 
 #endif //TRAVELING_SALESMAN_ALOGRITHME_DESCENTE_H

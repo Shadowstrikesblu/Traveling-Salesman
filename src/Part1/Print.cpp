@@ -7,9 +7,18 @@
 #include "Print.h"
 #include "../City.h"
 
+
+
 void Print(const std::vector<City>& cities) {
-//    std::cout << "Solution:" << std::endl;
+    std::cout << "Solution:";
     for (const City& city : cities) {
-        std::cout << city.id << std::endl;
+        std::cout << " " << city.id;
     }
+    std::cout << std::endl;
+}
+void PrintOrder(const std::vector<int>& order) {
+    for (int city : order) {
+        std::cout << city << " ";
+    }
+    std::cout << std::endl;
 }
