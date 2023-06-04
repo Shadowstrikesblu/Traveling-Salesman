@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include "City.h"
 #include "Part1/Sort.h"
 #include "Part1/Random.h"
@@ -12,11 +13,19 @@
 #include "Part2/Meilleure_Ameliorante.h"
 #include "Part2/Alogrithme_Descente.h"
 #include "Part2/Premiere_ameliorante.h"
+#include "Complement/GetCityIndices.h"
 
 int main() {
     std::string filename = "../file.txt";
     std::vector<City> cities = ReadFile(filename);
-    //Un ordre de ville désigné aléatoirement
+    std::vector<City> randomcities = ReadFile(filename);
+    //Un vecteur pour chaque fonction que l'on déclare dans le main
+    std::vector<City> cities1 = ReadFile(filename);
+    std::vector<City> cities2 = ReadFile(filename);
+    std::vector<City> cities4 = ReadFile(filename);
+    std::vector<City> cities5 = ReadFile(filename);
+    std::vector<City> cities6 = ReadFile(filename);
+    // Un ordre de ville désigné aléatoirement
     if (cities.empty()) {
         return 1;
     }
@@ -28,75 +37,46 @@ int main() {
     // Calcule des distances
     Calculate(cities);
     // Solution Aléatoire
-    RandomizeCityOrder(cities);
-    std::cout << "Solution Aleatoire:" << std::endl;
+    RandomizeCityOrder(randomcities);
+    std::cout << "Solution Aleatoire ---> ";
+    Print(randomcities);
+    // Nouvelle fonction
+    std::vector<int> cityOrder(cities.size());
+    for (int i = 0; i < cities.size(); ++i) {
+        cityOrder[i] = i;
+    }
+    Swapping(cities1, 2, 5);
+    std::cout << "Sequence modifiee par la fonction Echange: ";
     Print(cities);
-    //Nouvelle fonction
-    std::vector<int> cityOrder = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Swapping(cityOrder, 2, 5);
-    std::cout << "Sequence modifiee par la fonction Echange: ";
-    for (int city : cityOrder) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    //Nouvelle fonction
-    std::vector<int> cityOrder2= cityOrder ;
-    Swapping(cityOrder, 2, 5);
-    std::cout << "Sequence modifiee par la fonction Echange: ";
-    for (int city : cityOrder2) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    //Nouvelle fonction
-    std::vector<int> cityOrder3 = cityOrder;
-    reinsertion_par_index(cityOrder3,3);
+    // Nouvelle fonction
+    Swapping_by_Index(cities2, 4);
+    std::cout << "Sequence modifiee par la fonction Echange_par_index: ";
+    Print(cities);
+    // Nouvelle fonction
+    reinsertion_par_index(cities, 7);
     std::cout << "Sequence modifiee par Reinsertion par index: ";
-    for (int city : cityOrder3) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    //Nouvelle fonction
-    std::vector<int> cityOrder4 = cityOrder;
-    Two_Opt(cityOrder4, 2, 5);
+    Print(cities);
+    // Nouvelle fonction
+    Two_Opt(cities4, 2, 5);
     std::cout << "Sequence modifie par Two_Opt: ";
-    for (int city : cityOrder4) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    Two_Opt_by_Index(cityOrder4, 5);
+    Print(cities4);
+    Two_Opt_by_Index(cities5, 5);
     std::cout << "Sequence modifie par Two_Opt_by_Index: ";
-    for (int city : cityOrder4) {
-        std::cout << city << " ";
+    Print(cities5);
+    std::vector<std::vector<int>> sequence2;
+    std::ifstream sequenceFile("file.txt");
+    int swapIndex1, swapIndex2;
+    while (sequenceFile >> swapIndex1 >> swapIndex2) {
+        sequence2.push_back({swapIndex1, swapIndex2});
     }
-    std::cout << std::endl;
-    std::vector<int> cityOrder5 = cityOrder;
-    std::vector<std::vector<int>> sequence2 = {{1, 3, 0, 2, 4, 5, 6, 7, 8, 9}, {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}};
-    std::vector<int> meilleure_solution = Meilleure_Ameliorante(cityOrder5, sequence2, cities);
+    sequenceFile.close();
+    std::vector<int> meilleure_solution = Meilleure_Ameliorante(cities6, sequence2);
     std::cout << "Solution trouvee par la fonction Meilleure_Ameliorante: ";
-    for (int city : meilleure_solution) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    std::vector<int> cityOrder6 = cityOrder;
-    std::vector<std::vector<int>> voisinage = {{2,4,7,8,9,1,3,5,0,6}, {1,2,3,7,8,9,0,4,5,6}};
-    std::vector<int> algorithme_descente = Descente(cityOrder6, voisinage, cities);
-
+    PrintOrder(meilleure_solution);
+    std::vector<int> algorithme_descente = Descente(cities6, sequence2);
     std::cout << "Solution trouvee par la fonction Algorithme_Descente: ";
-    for (int city : algorithme_descente) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-    std::vector<int> bestSolution = Premiere(cityOrder6, sequence2, cities);
-
+    PrintOrder(algorithme_descente);
+    std::vector<int> bestSolution = Premiere(cities6, sequence2);
     std::cout << "Solution trouvee par la fonction Premiere_ameliorante: ";
-    for (int city : bestSolution) {
-        std::cout << city << " ";
-    }
-    std::cout << std::endl;
-
-    return 0;
-
-    return 0;
-
-    return 0;
+    PrintOrder(bestSolution);
 }

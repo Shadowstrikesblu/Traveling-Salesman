@@ -28,11 +28,12 @@ double Calculate(const std::vector<City>& cities) {
 
     for (int i = 0; i < cities.size() - 1; i++) {
         double distance = CalculateDistance(cities[i], cities[i + 1]);
-        std::cout << "Distance entre les villes " << i << " et " << i + 1 << ": " << distance << std::endl;
+        //Uniquement pour affocher les distances entre deux villes
+//        std::cout << "Distance entre les villes " << i << " et " << i + 1 << ": " << distance << std::endl;
         totalDistance += distance;
         count++;
     }
 
-    double averageDistance = totalDistance / count;
-    std::cout << "Distance moyenne: " << averageDistance << std::endl;
+    double averageDistance = totalDistance ;
+    std::cout << "Distance totale: " << averageDistance << std::endl;
 }
