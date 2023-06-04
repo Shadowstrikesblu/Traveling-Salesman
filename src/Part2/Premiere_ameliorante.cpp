@@ -3,7 +3,7 @@
 //
 
 #include "Premiere_ameliorante.h"
-#include "Meilleure_ameliorante.h"
+#include "Meilleure_Ameliorante.h"
 
 std::vector<int> Premiere(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities) {
     std::vector<int> bestSolution = sequence1;
