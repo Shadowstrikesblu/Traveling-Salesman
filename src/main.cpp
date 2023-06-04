@@ -15,6 +15,21 @@
 #include "Part2/Premiere_ameliorante.h"
 #include "Complement/GetCityIndices.h"
 
+void WriteCityOrderToFile(const std::vector<City>& cities, const std::string& filename) {
+    std::ofstream outputFile(filename);
+    if (!outputFile) {
+        std::cerr << "Error opening the file: " << filename << std::endl;
+        return;
+    }
+
+    for (const City& city : cities) {
+        outputFile << city.name << " ";
+    }
+    outputFile << std::endl;
+
+    outputFile.close();
+}
+
 int main() {
     std::string filename = "../file.txt";
     std::vector<City> cities = ReadFile(filename);
@@ -25,6 +40,9 @@ int main() {
     std::vector<City> cities4 = ReadFile(filename);
     std::vector<City> cities5 = ReadFile(filename);
     std::vector<City> cities6 = ReadFile(filename);
+    std::vector<City> cities7 = ReadFile(filename);
+    std::vector<City> cities8 = ReadFile(filename);
+    std::ofstream outputFile("results.txt");
     // Un ordre de ville désigné aléatoirement
     if (cities.empty()) {
         return 1;
@@ -34,12 +52,14 @@ int main() {
     orderCitiesByDistance(cities, startCity);
     // Affiche le nouvel ordre des villes
     Print(cities);
+    outputFile << "New order of cities: ";
     // Calcule des distances
     Calculate(cities);
     // Solution Aléatoire
     RandomizeCityOrder(randomcities);
     std::cout << "Solution Aleatoire ---> ";
     Print(randomcities);
+
     // Nouvelle fonction
     std::vector<int> cityOrder(cities.size());
     for (int i = 0; i < cities.size(); ++i) {
@@ -73,10 +93,20 @@ int main() {
     std::vector<int> meilleure_solution = Meilleure_Ameliorante(cities6, sequence2);
     std::cout << "Solution trouvee par la fonction Meilleure_Ameliorante: ";
     PrintOrder(meilleure_solution);
-    std::vector<int> algorithme_descente = Descente(cities6, sequence2);
+    std::vector<int> algorithme_descente = Descente(cities7, sequence2);
     std::cout << "Solution trouvee par la fonction Algorithme_Descente: ";
     PrintOrder(algorithme_descente);
-    std::vector<int> bestSolution = Premiere(cities6, sequence2);
+    std::vector<int> bestSolution = Premiere(cities8, sequence2);
     std::cout << "Solution trouvee par la fonction Premiere_ameliorante: ";
     PrintOrder(bestSolution);
+
+    WriteCityOrderToFile(randomcities, "random_cities.txt");
+    WriteCityOrderToFile(cities1, "echange.txt");
+    WriteCityOrderToFile(cities2, "echange_index.txt");
+    WriteCityOrderToFile(cities, "modified_cities.txt");
+    WriteCityOrderToFile(cities5, "Two_opt_index.txt");
+    WriteCityOrderToFile(cities4, "Two_opt.txt");
+    WriteCityOrderToFile(cities6, "Meilleure_Ameliorante.txt");
+    WriteCityOrderToFile(cities7, "Descente.txt");
+    WriteCityOrderToFile(cities8, "Premiere_ameliorante.txt");
 }
