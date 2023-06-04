@@ -10,6 +10,6 @@
 #include "../Part1/Calculate.h"
 #include "../City.h"
 
-std::vector<int> Premiere(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities);
+std::vector<int> Premiere(const std::vector<City>& cities, const std::vector<std::vector<int>>& sequence2);
 
 #endif //TRAVELING_SALESMAN_PREMIERE_AMELIORANTE_H

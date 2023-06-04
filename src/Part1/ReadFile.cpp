@@ -12,18 +12,17 @@ std::vector<City> ReadFile(const std::string& filename) {
     std::string line;
 
     if (!std::getline(file, line)) {
-        std::cerr << "Failed to read the size of the input." << std::endl;
+        std::cerr << "Erreur au niveau du nom du fichier" << std::endl;
         return cities;
     }
     int size;
     try {
         size = std::stoi(line);
     } catch (const std::invalid_argument& ex) {
-        std::cerr << "Invalid input size: " << line << std::endl;
+        std::cerr << "Erreur au niveau de la taille du fichier " << line << std::endl;
         return cities;
     }
 
-    // Read the city information from the file
     for (int i = 0; i < size; i++) {
         std::getline(file, line);
         std::istringstream ss(line);
@@ -31,7 +30,7 @@ std::vector<City> ReadFile(const std::string& filename) {
         std::string name;
         ss >> name >> latitude >> longitude;
         if (ss.fail()) {
-            std::cerr << "Invalid input format in line " << i + 2 << std::endl;
+            std::cerr << "Mauvaise entrée " << i + 2 << std::endl;
             return cities;
         }
         cities.emplace_back(i, name, latitude, longitude);

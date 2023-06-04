@@ -4,9 +4,11 @@
 
 #ifndef TRAVELING_SALESMAN_REINSERTION_H
 #define TRAVELING_SALESMAN_REINSERTION_H
+#include "../City.h"
+#include <vector>
 
-void reinsertion(std::vector<int> &vector, int i, int j);
-void reinsertion_par_index(std::vector<int>& s, int index) ;
+void reinsertion(std::vector<City>& cities, int a, int b) ;
+void reinsertion_par_index(std::vector<City>& cities, int index) ;
 
 
 
