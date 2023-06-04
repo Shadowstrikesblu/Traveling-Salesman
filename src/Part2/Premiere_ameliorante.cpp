@@ -22,4 +22,3 @@ std::vector<int> Premiere(const std::vector<City>& cities, const std::vector<std
     return bestSolution;
 }
 
-
