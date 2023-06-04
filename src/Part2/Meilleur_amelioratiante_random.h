@@ -8,7 +8,7 @@
 #include <random>
 #include "../Part1/Calculate.h"
 #include "../City.h"
-#include "Meilleure_ameliorante.h"
+#include "Meilleure_Ameliorante.h"
 
 
 std::vector<int> Best_Random(const std::vector<int>& sequence1, const std::vector<std::vector<int>>& sequence2, const std::vector<City>& cities);

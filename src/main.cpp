@@ -9,7 +9,7 @@
 #include "Part2/Swapping.h"
 #include "Part2/Reinsertion.h"
 #include "Part2/Two_opt.h"
-#include "Part2/Meilleure_ameliorante.h"
+#include "Part2/Meilleure_Ameliorante.h"
 #include "Part2/Alogrithme_Descente.h"
 #include "Part2/Premiere_ameliorante.h"
 
