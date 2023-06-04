@@ -3,7 +3,9 @@
 //
 
 #include "Alogrithme_Descente.h"
-#include "Meilleure_ameliorante.h"
+#include "Meilleure_Ameliorante.h"
+
+
 
 std::vector<int> Descente(const std::vector<int>& s, const std::vector<std::vector<int>>& voisinage, const std::vector<City>& cities) {
     std::vector<int> solution = s;
@@ -14,7 +16,7 @@ std::vector<int> Descente(const std::vector<int>& s, const std::vector<std::vect
     while (meilleure_distance > distance_solution) {
         meilleure_solution = solution;
         meilleure_distance = distance_solution;
-        solution = Meilleure(solution, voisinage, cities);
+        solution = Meilleure_Ameliorante(solution, voisinage, cities);
         distance_solution = DistanceSequence(solution, cities);
     }
 

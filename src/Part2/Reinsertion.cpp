@@ -6,23 +6,25 @@
 #include "Reinsertion.h"
 
 //Considérant qu'on a 10 voisins, on obtient 36 voisins
+//Reponse a la question 5.1 et 5.2
 
-void reinsertion_par_index(std::vector<int>& s, int index) {
-    if (index <= s.size() - 2) {
+void reinsertion_par_index(std::vector<int>& sequence, int index) {
+    if (index <= sequence.size() - 2) {
         int i = 0;
         int j = index + 1;
-        reinsertion(s, i, j);
+        reinsertion(sequence, i, j);
     } else {
-        int i = (index - 1) / (s.size() - 2);
-        int j = (index - 1) % (s.size() - 2);
+        int i = (index - 1) / (sequence.size() - 2);
+        int j = (index - 1) % (sequence.size() - 2);
         if (j >= i - 1) {
             j = j + 2;
         }
-        reinsertion(s, i, j);
+        reinsertion(sequence, i, j);
     }
 }
 
-void reinsertion(std::vector<int> &vector, int i, int j) {
-
+void reinsertion(std::vector<int>& sequence, int a, int b) {
+    int city = sequence[a];
+    sequence.erase(sequence.begin() + a);
+    sequence.insert(sequence.begin() + b, city);
 }
-
